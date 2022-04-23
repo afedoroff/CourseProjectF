@@ -1,9 +1,9 @@
 package dao;
 
-import models.Participant;
 import models.Task;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import utils.HibernateSessionFactoryUtil;
 
 import java.sql.Connection;
@@ -14,37 +14,46 @@ import java.util.List;
 
 public class TaskDao {
     public static void update(Task task) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.update(task);
-        tx1.commit();
-        session.close();
+        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction tx1 = session.beginTransaction();
+            session.update(task);
+            tx1.commit();
+        }
     }
 
     public static void save(Task task) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.save(task);
-        tx1.commit();
-        session.close();
+        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction tx1 = session.beginTransaction();
+            session.save(task);
+            tx1.commit();
+        }
     }
     public static Task findById(int idd){
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        Task auu = session.get(Task.class, idd);
-        tx1.commit();
-        session.close();
-        return auu;
+        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction tx1 = session.beginTransaction();
+            Task auu = session.get(Task.class, idd);
+            tx1.commit();
+            return auu;
+        }
     }
 
     public static List<Task> findByIdList(List<Integer> idd){
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        String hql = "SELECT p FROM Task p WHERE p.id IN :ids";
-        List<Task> tasks = session.createQuery(hql).setParameter("ids", idd).getResultList();
-        tx1.commit();
-        session.close();
-        return tasks;
+        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction tx1 = session.beginTransaction();
+            String hql = "SELECT p FROM Task p WHERE p.id IN :ids";
+            List<Task> tasks = session.createQuery(hql).setParameter("ids", idd).getResultList();
+            tx1.commit();
+            return tasks;
+        }
+    }
+
+    public static int getMaxId(){
+        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            String SQL_QUERY = "select max(task_id)from Task ";
+            Query query = session.createQuery(SQL_QUERY);
+            List list = query.list();
+            return (int) list.get(0);
+        }
     }
 
     public static void delById(int idd){
@@ -62,18 +71,6 @@ public class TaskDao {
         } catch (SQLException ex){
             ex.printStackTrace();
         }
-//        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx1 = session.beginTransaction();
-////        Task task = TaskDao.findById(idd);
-////        for (Participant participant: task.getParticipants()) {
-////            task.removeParticipant(participant);
-////        }
-////        session.remove(task);
-//        Task task = new Task();
-//        task.setTask_id(idd);
-//        session.remove(task);
-//        tx1.commit();
-//        session.close();
     }
 
     public static List<Task> findAll() {

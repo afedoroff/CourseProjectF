@@ -2,6 +2,7 @@ package servlet.add;
 
 import dao.ProjectDao;
 import models.Project;
+import utils.Utils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,8 +17,9 @@ public class AddProjectServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         Project project = new Project();
-        project.setTitle(req.getParameter("title"));
-        project.setDescription(req.getParameter("description"));
+        project.setProject_id(ProjectDao.getMaxId()+1);
+        project.setTitle(Utils.convertToUTF8(req.getParameter("title")));
+        project.setDescription(Utils.convertToUTF8(req.getParameter("description")));
         ProjectDao.save(project);
         resp.sendRedirect("/mainPage");
     }

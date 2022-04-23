@@ -9,8 +9,6 @@ import java.util.Set;
 public class Project {
     @Id
     @Column(name = "project_id")
-    @SequenceGenerator(name = "projectSeq", sequenceName = "SEQUENCE_ID_PROJECT", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "projectSeq")
     private Integer project_id;
 
     @Column(name = "title")
@@ -22,7 +20,7 @@ public class Project {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "project", cascade = CascadeType.ALL)
     private Set<Task> tasks = new HashSet<>();
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set<Participant> participants = new HashSet<>();
 
     public Integer getProject_id() {

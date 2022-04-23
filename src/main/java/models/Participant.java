@@ -9,8 +9,6 @@ import java.util.Set;
 public class Participant {
     @Id
     @Column(name = "participant_id")
-    @SequenceGenerator(name = "participantSeq", sequenceName = "SEQUENCE_ID_PARTICIPANT", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "participantSeq")
     private Integer participant_id;
 
     @Column(name = "name")

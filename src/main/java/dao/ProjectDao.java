@@ -1,49 +1,57 @@
 package dao;
 
-import models.Participant;
 import models.Project;
 import models.Task;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import utils.HibernateSessionFactoryUtil;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectDao {
     public static void update(Project project) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.update(project);
-        tx1.commit();
-        session.close();
+        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction tx1 = session.beginTransaction();
+            session.update(project);
+            tx1.commit();
+        }
     }
 
     public static void save(Project project) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.save(project);
-        tx1.commit();
-        session.close();
+        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction tx1 = session.beginTransaction();
+            session.save(project);
+            tx1.commit();
+        }
     }
     public static Project findById(int idd){
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        Project auu = session.get(Project.class, idd);
-        tx1.commit();
-        session.close();
-        return auu;
+        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction tx1 = session.beginTransaction();
+            Project auu = session.get(Project.class, idd);
+            tx1.commit();
+            return auu;
+        }
     }
 
     public static List<Project> findByIdList(List<Integer> idd){
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        String hql = "SELECT p FROM Project p WHERE p.id IN :ids";
-        List<Project> projects = session.createQuery(hql).setParameter("ids", idd).getResultList();
-        tx1.commit();
-        session.close();
-        return projects;
+        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction tx1 = session.beginTransaction();
+            String hql = "SELECT p FROM Project p WHERE p.id IN :ids";
+            List<Project> projects = session.createQuery(hql).setParameter("ids", idd).getResultList();
+            tx1.commit();
+            return projects;
+        }
+    }
+
+    public static int getMaxId(){
+        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            String SQL_QUERY = "select max(project_id)from Project ";
+            Query query = session.createQuery(SQL_QUERY);
+            List list = query.list();
+            return (int) list.get(0);
+        }
     }
 
     public static void delById(int idd){
@@ -67,18 +75,6 @@ public class ProjectDao {
         } catch (SQLException ex){
             ex.printStackTrace();
         }
-//        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx1 = session.beginTransaction();
-//        Project project = ProjectDao.findById(idd);
-//        for (Task task: project.getTasks()) {
-//            TaskDao.delById(task.getTask_id());
-//        }
-//        session.remove(project);
-////        Project project = new Project();
-////        project.setProject_id(idd);
-////        session.remove(project);
-//        tx1.commit();
-//        session.close();
     }
 
     public static List<Task> findAll() {

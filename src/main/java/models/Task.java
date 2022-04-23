@@ -10,8 +10,6 @@ import java.util.Set;
 public class Task {
     @Id
     @Column(name = "task_id")
-    @SequenceGenerator(name = "taskSeq", sequenceName = "SEQUENCE_ID_TESK", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "taskSeq")
     private Integer task_id;
 
     @Column(name = "title")
@@ -95,7 +93,7 @@ public class Task {
         this.project = project;
     }
 
-    public Set<Participant> getParticipants() {
+    public Set<Participant> getParticipants(Set<Participant> participantSet) {
         return participants;
     }
 
