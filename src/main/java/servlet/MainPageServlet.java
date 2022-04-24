@@ -25,6 +25,7 @@ public class MainPageServlet extends HttpServlet {
     req.setAttribute("listParticipant", listParticipant);
     req.setAttribute("listProject", listProject);
     req.setAttribute("listTask", listTask);
+    req.setAttribute("listTask", listTask);
 
     req.getRequestDispatcher("/MainPage.jsp").forward(req,resp);
   }

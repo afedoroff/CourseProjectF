@@ -4,11 +4,11 @@
     <div class="modal-dialog modal-dialog-centered modal-md" style="z-index: 1052">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="DelBookModalTitle">Вы действительно хотите удалить жанр?</h5><br>
+                <h5 class="modal-title" id="DelBookModalTitle">Are you sure you want to delete the participant?</h5><br>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-                <h6 class="modal-title">Жанр будет удален. Это действие необратимо</h6><br>
+                <h6 class="modal-title">The task will be deleted. This action is irreversible.</h6><br>
                 <button type="button" class="btn btn-dark px-4 md-close" data-bs-dismiss="modal"
                         style="float: left; padding-top: 10px; padding-bottom: 10px;">Отмена
                 </button>

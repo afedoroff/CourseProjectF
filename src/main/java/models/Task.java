@@ -27,7 +27,7 @@ public class Task {
     @Column(name = "deadline")
     private Date deadline;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id")
     private Project project;
 
@@ -93,7 +93,7 @@ public class Task {
         this.project = project;
     }
 
-    public Set<Participant> getParticipants(Set<Participant> participantSet) {
+    public Set<Participant> getParticipants() {
         return participants;
     }
 
@@ -105,6 +105,16 @@ public class Task {
         String str = new String();
         int i = 0;
         for (Participant participant: participants) {
+            str = str + " " + participant.getParticipant_id();
+            i++;
+        }
+        return str;
+    }
+
+    public String getArrayProjectId(){
+        String str = new String();
+        int i = 0;
+        for (Participant participant: project.getParticipants()) {
             str = str + " " + participant.getParticipant_id();
             i++;
         }

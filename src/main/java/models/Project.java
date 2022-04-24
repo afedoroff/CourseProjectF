@@ -20,7 +20,7 @@ public class Project {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "project", cascade = CascadeType.ALL)
     private Set<Task> tasks = new HashSet<>();
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "project", cascade = CascadeType.ALL)
     private Set<Participant> participants = new HashSet<>();
 
     public Integer getProject_id() {
@@ -61,5 +61,15 @@ public class Project {
 
     public void setParticipants(Set<Participant> participants) {
         this.participants = participants;
+    }
+
+    public String getArrayId(){
+        String str = new String();
+        int i = 0;
+        for (Participant participant: participants) {
+            str = str + " " + participant.getParticipant_id();
+            i++;
+        }
+        return str;
     }
 }

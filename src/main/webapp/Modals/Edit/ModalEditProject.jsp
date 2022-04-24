@@ -23,7 +23,7 @@
                 <button type="submit" form="editProjectForm"
                         class="btn btn-primary px-4 md-save"
                         style="float: right; padding-top: 10px; padding-bottom: 10px;">
-                    Сохранить
+                    Save
                 </button>
 
             </div>

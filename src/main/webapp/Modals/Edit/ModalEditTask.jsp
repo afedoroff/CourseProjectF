@@ -4,50 +4,58 @@
     <div class="modal-dialog modal-dialog-centered modal-md" style="z-index: 1052">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="EditTaskModalTitle">Изменить трек</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                <h5 class="modal-title" id="EditTaskModalTitle">Edit task</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="unselect()"></button>
             </div>
             <div class="modal-body">
 
-                <form id="editTaskForm" action="${pageContext.request.contextPath}/editTask" method="post" onsubmit="submit()">
+                <form id="editTaskForm" action = "${pageContext.request.contextPath}/addTask" method="post" onsubmit="submit()">
                     <input type="hidden" id="taskEditInput" name="task_id">
-                    <input type="hidden" id="artistSelected">
                     <div class="mb-3">
                         <input type="text" class="form-control" name="title" id="EditTaskTitle"
-                               placeholder="Введите название трека" required>
+                               placeholder="Enter task title" required>
                     </div>
                     <div class="mb-3">
-                        <input type="number" class="form-control" name="duration" id="EditTaskDuration"
-                               placeholder="Введите длительность трека" required min="1">
+                        <input type="text" class="form-control" name="description" id="EditTaskDescription"
+                               placeholder="Enter task description" required min="1">
                     </div>
                     <div class="mb-3">
-                        <select class="form-select" name="album_id" id="EditTaskAlbum" required>
-                            <option value="" disabled selected hidden>Альбом</option>
-                            <c:forEach var="album" items="${listAlbum}">
-                                <option value="${album.getAlbum_id()}">${album.getTitle()}</option>
+                        <select class="form-select" name="project_id" required id="EditTaskProject">
+                            <c:forEach var="project" items="${listProject}">
+                                <option value="${project.getProject_id()}">${project.getTitle()}</option>
                             </c:forEach>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <select class="form-select" name="genre_id" id="EditTaskGenre" required>
-                            <option value="" disabled selected hidden>Жанр</option>
-                            <c:forEach var="genre" items="${listGenre}">
-                                <option value="${genre.getGenre_id()}">${genre.getTitle()}</option>
+                        <select class="form-select" name="participant_id" id="EditTaskPriority" required>
+                            <option value="high">high</option>
+                            <option value="medium">medium</option>
+                            <option value="low">low</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-select" name="participant_id" id="EditTaskStatus" required>
+                            <option value="open">open</option>
+                            <option value="closed">closed</option>
+                            <option value="in process">in process</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-select" name="participant_id" multiple id="EditTaskParticipants" required>
+                            <c:forEach var="participant" items="${listParticipant}">
+                                <option value="${participant.getParticipant_id()}" class="participant">${participant.getName()}</option>
                             </c:forEach>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <select class="form-select" name="artist_id" multiple id="artists-select" id="EditTaskArtist" required>
-                            <c:forEach var="artist" items="${listArtist}">
-                                <option value="${artist.getArtist_id()}" class="artist">${artist.getName()}</option>
-                            </c:forEach>
-                        </select>
+                        <input type="date" class="form-control" name="deadline" id="EditTaskDeadline"
+                               placeholder="Enter task title" required lang="en">
                     </div>
                 </form>
                 <button type="submit" form="editTaskForm"
                         class="btn btn-primary px-4 md-save"
                         style="float: right; padding-top: 10px; padding-bottom: 10px;">
-                    Сохранить
+                    Save
                 </button>
 
             </div>
@@ -55,16 +63,28 @@
         </div>
     </div>
 </div>
-
 <script>
   function submit(){
-    let form = document.getElementById("editTaskForm")
+    let form = document.getElementById("editTaskForm");
+    let options = document.getElementsByClassName("participant");
+    for(let option of options){
+      option.removeAttribute("selected")
+      option.removeAttribute("hidden")
+    }
     form.addEventListener('submit', function (event) {
       if (!form.checkValidity()) {
         event.preventDefault()
         event.stopPropagation()
       }
     }, false)
+  }
+
+  function unselect(){
+    let options = document.getElementsByClassName("participant");
+    for(let option of options){
+      option.removeAttribute("selected")
+      option.removeAttribute("hidden")
+    }
   }
 </script>
 

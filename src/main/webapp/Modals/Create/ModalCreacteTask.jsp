@@ -4,8 +4,8 @@
     <div class="modal-dialog modal-dialog-centered modal-md" style="z-index: 1052">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="CreateTaskModalTitle">Добавить трек</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                <h5 class="modal-title" id="CreateTaskModalTitle">Add task</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
 
@@ -27,6 +27,14 @@
                         </select>
                     </div>
                     <div class="mb-3">
+                        <select class="form-select" name="priority" id="EditTaskPriority" required>
+                            <option value="" disabled selected hidden>Priority</option>
+                            <option value="high">high</option>
+                            <option value="medium">medium</option>
+                            <option value="low">low</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <select class="form-select" name="participant_id" multiple id="participants-select" required>
                             <c:forEach var="participant" items="${listParticipant}">
                                 <option value="${participant.getParticipant_id()}">${participant.getName()}</option>
@@ -35,13 +43,13 @@
                     </div>
                     <div class="mb-3">
                         <input type="date" class="form-control" name="deadline" id="CreateTaskDeadline"
-                               placeholder="Enter task title" required>
+                               placeholder="Enter task title" required lang="fr">
                     </div>
                 </form>
                 <button type="submit" form="createTaskForm"
                         class="btn btn-primary px-4 md-save"
                         style="float: right; padding-top: 10px; padding-bottom: 10px;">
-                    Добавить
+                    Add
                 </button>
 
             </div>
