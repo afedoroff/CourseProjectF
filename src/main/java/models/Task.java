@@ -31,7 +31,7 @@ public class Task {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "task_participant",
             joinColumns = { @JoinColumn(name = "task_id") },
             inverseJoinColumns = { @JoinColumn(name = "participant_id") })
@@ -101,13 +101,13 @@ public class Task {
         this.participants = participants;
     }
 
-//    public void addParticipant(Participant participant){
-//        this.participants.add(participant);
-//        participant.getTasks().add(this);
-//    }
-//
-//    public void removeParticipant(Participant participant){
-//        this.participants.remove(participant);
-//        participant.getTasks().remove(this);
-//    }
+    public String getArrayId(){
+        String str = new String();
+        int i = 0;
+        for (Participant participant: participants) {
+            str = str + " " + participant.getParticipant_id();
+            i++;
+        }
+        return str;
+    }
 }

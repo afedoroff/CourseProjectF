@@ -21,7 +21,7 @@ public class Participant {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @ManyToMany(mappedBy = "participants")
+    @ManyToMany(mappedBy = "participants",fetch = FetchType.EAGER)
     private Set<Task> tasks = new HashSet<>();
 
     public Integer getParticipant_id() {
@@ -63,14 +63,4 @@ public class Participant {
     public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
     }
-
-//    public void addTask(Task task){
-//        this.tasks.add(task);
-//        task.getParticipants().add(this);
-//    }
-//
-//    public void removeTask(Task task){
-//        this.tasks.remove(task);
-//        task.getParticipants().remove(this);
-//    }
 }
