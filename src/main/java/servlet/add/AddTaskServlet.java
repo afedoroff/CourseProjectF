@@ -23,7 +23,7 @@ public class AddTaskServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             resp.setContentType("text/html");
-            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(req.getParameter("deadline"));
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(req.getParameter("deadline"));
             String description = Utils.convertToUTF8(req.getParameter("description"));
             String priority = Utils.convertToUTF8(req.getParameter("priority"));
             String status = Utils.convertToUTF8(req.getParameter("status"));
@@ -31,11 +31,11 @@ public class AddTaskServlet extends HttpServlet {
             String[] participant = req.getParameterValues("participant_id");
 
             Task task = new Task();
-            task.setTask_id(TaskDao.getMaxId());
+            task.setTask_id(TaskDao.getMaxId()+1);
             task.setDeadline(date);
             task.setDescription(description);
             task.setPriority(priority);
-            task.setStatus(status);
+            task.setStatus("open");
             task.setTitle(title);
             task.setProject(ProjectDao.findById(Integer.parseInt(req.getParameter("project_id"))));
 

@@ -73,7 +73,7 @@ public class ParticipantDao {
         }
     }
 
-    public static List<Task> findAll() {
+    public static List<Participant> findAll() {
         return HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession()

@@ -77,7 +77,7 @@ public class ProjectDao {
         }
     }
 
-    public static List<Task> findAll() {
+    public static List<Project> findAll() {
         return HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession()

@@ -17,7 +17,7 @@
                     <version>2.2</version>
                     <configuration>
                         <port>8080</port>   //Configure port number
-                        <path>/my-app</path>   //Configure application root URL
+                        <path>/</path>   //Configure application root URL
                     </configuration>
                 </plugin>
         </plugins>

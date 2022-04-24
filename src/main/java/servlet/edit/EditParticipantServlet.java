@@ -18,6 +18,7 @@ public class EditParticipantServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         Participant participant = new Participant();
+        participant.setParticipant_id(Integer.parseInt(req.getParameter("participant_id")));
         participant.setName(Utils.convertToUTF8(req.getParameter("name")));
         participant.setSurname(Utils.convertToUTF8(req.getParameter("surname")));
         participant.setProject(ProjectDao.findById(Integer.parseInt(req.getParameter("project_id"))));
